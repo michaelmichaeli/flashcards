@@ -12,7 +12,7 @@ const browserRouter = createBrowserRouter([
 		element: <App />,
 	},
 	{
-		path: "/deck/:declId",
+		path: "/deck/:deckId",
 		element: <Deck />,
 	},
 ]);

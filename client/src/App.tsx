@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
 import { deleteDeck } from "./api/deleteDeck";
-import { Deck, getDecks } from "./api/getDecks";
+import { getDecks } from "./api/getDecks";
 import { createDeck } from "./api/createDeck";
+import { TDeck } from "./api/types";
 
 function App() {
-	const [decks, setDecks] = useState<Deck[]>([]);
+	const [decks, setDecks] = useState<TDeck[]>([]);
 	const [title, setTitle] = useState<string>("");
 
 	const handlerInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

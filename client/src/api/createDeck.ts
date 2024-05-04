@@ -4,7 +4,7 @@ export async function createDeck(title: string) {
 	const response = await fetch(`${API_URL}/decks`, {
 		method: "POST",
 		body: JSON.stringify({
-			title: title,
+			title
 		}),
 		headers: {
 			"Content-Type": "application/json",
