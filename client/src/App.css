@@ -22,8 +22,6 @@
   font-size: 1.2rem;
   font-weight: 600;
   border: 1px solid #000;
-  padding: 1rem;
-  width: 100%;
 }
 
 .deck {
@@ -35,13 +33,24 @@
   padding: 1rem;
   text-decoration: none;
   color: #000;
-  background-color: lightgreen
+  background-color: lightgreen;
+  cursor: pointer;
 }
 
 .actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 10px;
+}
+
+form {
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   gap: 10px;
 }
+

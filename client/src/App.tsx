@@ -1,37 +1,33 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-type Deck = {
-	id: string;
-	title: string;
-};
+import { Link } from "react-router-dom";
+import { deleteDeck } from "./api/deleteDeck";
+import { Deck, getDecks } from "./api/getDecks";
+import { createDeck } from "./api/createDeck";
 
 function App() {
 	const [decks, setDecks] = useState<Deck[]>([]);
-	console.log("🚀 ~ App ~ deck:", decks);
 	const [title, setTitle] = useState<string>("");
 
-	const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handlerInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		await fetch("http://localhost:5000/decks", {
-			method: "POST",
-			body: JSON.stringify({
-				title: title,
-			}),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const deck = await createDeck(title);
+		setDecks([deck, ...decks]);
 		setTitle("");
+	};
+
+	const handleDeleteDeck = async (deckId: string) => {
+		await deleteDeck(deckId);
+		setDecks(decks.filter((deck) => deck._id !== deckId));
 	};
 
 	useEffect(() => {
 		const fetchDeck = async () => {
-			const response = await fetch("http://localhost:5000/decks");
-			const newDecks = await response.json();
+			const newDecks = await getDecks();
 			setDecks(newDecks);
 		};
 		fetchDeck();
@@ -41,10 +37,12 @@ function App() {
 		<>
 			<ul className="decks">
 				{decks.map((deck) => (
-					<li className="deck" key={deck.id}>
-						<h2>{deck.title}</h2>
+					<li className="deck" key={deck._id}>
+						<Link to={`/deck/${deck._id}`}>
+							<h2>{deck.title}</h2>
+						</Link>
 						<div className="actions">
-							<button>Delete</button>
+							<button onClick={() => handleDeleteDeck(deck._id)}>Delete</button>
 							<button>Edit</button>
 							<button>Add Card</button>
 						</div>
@@ -56,7 +54,7 @@ function App() {
 				<input
 					type="text"
 					name="title"
-					onChange={inputChangeHandler}
+					onChange={handlerInputChange}
 					value={title}
 				/>
 				<button type="submit">Create Deck</button>

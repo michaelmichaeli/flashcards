@@ -25,6 +25,57 @@ app.post("/decks", async (req: Request, res: Response) => {
 	res.json(createdDeck);
 });
 
+app.delete("/decks/:deckId", async (req: Request, res: Response) => {
+	const deck = await Deck.findByIdAndDelete(req.params.deckId);
+	res.json(deck);
+});
+
+app.put("/decks/:id", async (req: Request, res: Response) => {
+	const deck = await Deck.findByIdAndUpdate(req.params.id, {
+		title: req.body.title,
+	});
+	res.json(deck);
+});
+
+app.get("/decks/:id", async (req: Request, res: Response) => {
+	const deck = await Deck.findById(req.params.id);
+	res.json(deck);
+});
+
+app.post("/decks/:id/cards", async (req: Request, res: Response) => {
+	const deck = await Deck.findById(req.params.id);
+	const newCard = {
+		question: req.body.question,
+		answer: req.body.answer,
+	};
+	// deck.cards.push(newCard);
+	// await deck.save();
+	res.json(deck);
+});
+
+app.delete("/decks/:id/cards/:cardId", async (req: Request, res: Response) => {
+	const deck = await Deck.findById(req.params.id);
+	// deck.cards.id(req.params.cardId).remove();
+	// await deck.save();
+	res.json(deck);
+});
+
+app.put("/decks/:id/cards/:cardId", async (req: Request, res: Response) => {
+	const deck = await Deck.findById(req.params.id);
+	// deck.cards.id(req.params.cardId).updateOne({
+	// 	question: req.body.question,
+	// 	answer: req.body.answer,
+	// });
+	// await deck.save();
+	res.json(deck);
+});
+
+app.get("/decks/:id/cards/:cardId", async (req: Request, res: Response) => {
+	const deck = await Deck.findById(req.params.id);
+	// const card = deck.cards.id(req.params.cardId);
+	// res.json(card);
+});
+
 mongoose.connect(process.env.MONGO_URL!).then(() => {
 	console.log("listening to port ", PORT);
 });
