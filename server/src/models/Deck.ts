@@ -5,7 +5,6 @@ const ObjectId = Schema.ObjectId;
 
 const DeckSchema = new Schema({
 	title: String,
-	name: String,
 });
 
 const DeckModel = mongoose.model("Deck", DeckSchema);
